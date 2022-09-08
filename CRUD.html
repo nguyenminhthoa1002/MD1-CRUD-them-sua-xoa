@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 style="text-align: center">Table</h1> <br>
+<input id="newStudent" type="text">
+<button onclick="createStudent()">Create Student</button>
+<br> <br>
+<span id="validate"></span>
+<table border="1" style="width: 100%; border-collapse: collapse; text-align: center">
+  <tr>
+    <th>STT</th>
+    <th>Name</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    <tbody id="drawTable">
+<!--    <tr>-->
+<!--      <td>1</td>-->
+<!--      <td>Mai</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>2</td>-->
+<!--      <td>Việt Anh</td>-->
+<!--    </tr>-->
+    </tbody>
+</table>
+
+<script>
+  let list =['Mai', 'Việt Anh', 'Hưng', 'Khánh']
+  function showList() {
+    let drawTable = '';
+    for (let i = 0; i < list.length; i++) {
+        let j=i+1;
+      // drawTable+= '<tr>' +
+      //         '<td>'+j+'</td>'+
+      //         '<td>'+list[i]+'</td>'+
+      //         '</tr>'
+
+        drawTable+=`<tr>
+                    <td>${j}</td>
+                    <td>${list[i]}</td>
+                    <td><button style="background: blue; color: white; border-radius: 20px" onclick="update(${i})">Edit</button></td>
+                    <td><button style="background: red; color: white; border-radius: 20px" onclick="deleteStudent(${i})">Delete</button></td>
+                    </tr>`
+    }
+    document.getElementById('drawTable').innerHTML = drawTable;
+  }
+  showList()
+
+  function createStudent (){
+      let newStudent= document.getElementById('newStudent').value;
+      if (newStudent.trim()===''){
+         document.getElementById('validate').innerHTML = '<span style="color: red">The name is required! Please try again!</span>'
+      } else {
+          list.push(newStudent);
+          showList();
+          document.getElementById('validate').innerHTML = '<span style="color: blue">Create success!</span>'
+      }
+  }
+
+function update(id) {
+    let edit = prompt('Enter the name to update student', list[id]);
+    if (edit.trim() === '') {
+        document.getElementById('validate').innerHTML = '<span style="color: red">The name is required! Please try again!</span>'
+    } else {
+        list[id] = edit;
+        showList();
+        document.getElementById('validate').innerHTML = '<span style="color: blue">Update success!</span>'
+    }
+}
+
+  function deleteStudent(id) {
+     list.splice(id,1)
+      showList();
+  }
+</script>
+</body>
+</html>
